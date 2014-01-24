@@ -1,5 +1,3 @@
-# Default to DFU build 
-DFU_BUILD?=y
 
 # Define the compiler/tools prefix
 GCC_PREFIX = arm-none-eabi-
@@ -65,16 +63,17 @@ CFLAGS += -MD -MP -MF $@.d
 # Target specific defines
 CFLAGS += -DUSE_STDPERIPH_DRIVER
 CFLAGS += -DSTM32F10X_MD
-ifeq ("$(DFU_BUILD)","y")
 CFLAGS += -DDFU_BUILD_ENABLE
-LD_DFU=_dfu
+
+ifeq ("$(USE_SWD_JTAG)","y") 
+CFLAGS += -DUSE_SWD_JTAG
 endif
 
 # C++ specific flags
 CPPFLAGS = -fno-exceptions -fno-rtti 
 
 # Linker flags
-LDFLAGS += -T../linker/linker_stm32f10x_md$(LD_DFU).ld -nostartfiles -Xlinker --gc-sections 
+LDFLAGS += -T../linker/linker_stm32f10x_md_dfu.ld -nostartfiles -Xlinker --gc-sections 
 LDFLAGS += -L$(SRC_PATH)/$(LIB_CORE_COMMON_PATH)/build -lcore-common-lib
 LDFLAGS += -L$(SRC_PATH)/$(LIB_CORE_COMMUNICATION_PATH)/build -lcore-communication-lib
 LDFLAGS += -Wl,-Map,$(TARGET).map
