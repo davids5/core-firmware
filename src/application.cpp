@@ -145,8 +145,6 @@ void setup1()
 
 void loop1()
 {
-    loop3();
-return;
     delay(1);
     switch(state){
         case 0:
@@ -284,8 +282,8 @@ void setup()
 
 	//Register all the Tinker functions
 
-//        setup1();
-//        setup2();
+        setup1();
+        setup2();
         setup3();
 	Spark.function("digitalread", tinkerDigitalRead);
 	Spark.function("digitalwrite", tinkerDigitalWrite);
@@ -313,7 +311,9 @@ void debug_output_(const char *p)
 void loop()
 {
 	//This will run in a loop
-	  loop1();
+  loop1();
+  loop2();
+  loop3();
 }
 
 /*******************************************************************************
